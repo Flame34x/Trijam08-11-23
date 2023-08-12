@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        sr.color = enemyTeam.teamColor; // Set the color of the sprite renderer
+        sr.sprite = enemyTeam.enemySprite; // Set the color of the sprite renderer
 
        transform.Translate(Vector2.down * Time.deltaTime * moveSpeed); // Move the enemy
     }

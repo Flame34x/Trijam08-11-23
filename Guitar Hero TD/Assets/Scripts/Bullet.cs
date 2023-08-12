@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
         transform.Translate(Vector2.up * Time.deltaTime * 10);
         if (team != null)
         {
-            sr.color = team.teamColor;
+            sr.sprite = team.bulletSprite;
         }
 
     }

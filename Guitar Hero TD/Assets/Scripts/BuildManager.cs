@@ -11,6 +11,12 @@ public class BuildManager : MonoBehaviour
     public TeamData[] availableTeams;
     public int currentTeamIndex = 0;
 
+    public TeamData nextTeam;
+    public TeamData previousTeam;
+
+    public int currentTurretAmt;
+    public int maxTurretAmt;
+
     #endregion
 
     #region Private Fields
@@ -26,6 +32,25 @@ public class BuildManager : MonoBehaviour
         HandleMouseInput();
         HandleTowerPlacement();
         ChangeTeam();
+
+        if (currentTeamIndex + 1 >= availableTeams.Length)
+        {
+            nextTeam = availableTeams[0];
+        }
+        else
+        {
+            nextTeam = availableTeams[currentTeamIndex + 1];
+        }
+
+        if (currentTeamIndex - 1 < 0)
+        {
+            previousTeam = availableTeams[availableTeams.Length - 1];
+        }
+        else
+        {
+            previousTeam = availableTeams[currentTeamIndex - 1];
+        }
+
     }
 
     #endregion
@@ -46,6 +71,17 @@ public class BuildManager : MonoBehaviour
 
             TeamData selectedTeam = availableTeams[currentTeamIndex];
         }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            // Increment the current team index
+            currentTeamIndex = (currentTeamIndex - 1) % availableTeams.Length;
+            if(currentTeamIndex < 0)
+            {
+                currentTeamIndex = availableTeams.Length - 1;
+            }
+
+            TeamData selectedTeam = availableTeams[currentTeamIndex];
+        }
     }
 
     #endregion
@@ -54,19 +90,34 @@ public class BuildManager : MonoBehaviour
 
     private void HandleTowerPlacement()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (spot != null && !spot.GetComponent<BuildSpot>().IsOccupied)
+
+            if (Input.GetMouseButtonDown(0))
             {
-                spot.GetComponent<BuildSpot>().BuildTower(selectedTower, availableTeams[currentTeamIndex]);
+                if (spot != null && !spot.GetComponent<BuildSpot>().IsOccupied)
+                {
+                if (currentTurretAmt < maxTurretAmt)
+                {
+                    spot.GetComponent<BuildSpot>().BuildTower(selectedTower, availableTeams[currentTeamIndex]);
+                    currentTurretAmt++;
+                }
+                else
+                {
+                    return;
+                }
+                }
             }
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (spot != null && spot.GetComponent<BuildSpot>().IsOccupied)
+                {
+                    spot.GetComponent<BuildSpot>().DestroyTower();
+                    currentTurretAmt--;
+                }
+            
         }
-        if (Input.GetMouseButtonDown(1))
+        else
         {
-            if (spot != null && spot.GetComponent<BuildSpot>().IsOccupied)
-            {
-                spot.GetComponent<BuildSpot>().DestroyTower();
-            }
+            return; // some sort of notification that you can't place more towers
         }
     }
 

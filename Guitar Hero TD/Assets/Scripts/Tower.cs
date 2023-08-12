@@ -24,7 +24,7 @@ public class Tower : MonoBehaviour
             Shoot();
             lastShot = Time.time;
         }
-        sr.color = team.teamColor;
+        sr.sprite = team.towerSprite;
 
     }
 

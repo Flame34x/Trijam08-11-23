@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teamName: Blue
   teamColor: {r: 0, g: 0.2520709, b: 1, a: 1}
+  bulletSprite: {fileID: 21300000, guid: 3c84a75db9e146a45ae5b2a3ea4a5290, type: 3}
+  towerSprite: {fileID: 21300000, guid: c8bb4782a47db6941a909c90bd86cf87, type: 3}
+  enemySprite: {fileID: 21300000, guid: 01fa7c3c50a234b4cab71c5553d7ca93, type: 3}
